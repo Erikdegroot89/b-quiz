@@ -84,6 +84,12 @@ class QuizController extends Controller
     {
         $player      = session('player');
         $team        = session('team');
+
+        if(!$player)
+        {
+            return redirect(route('entry.team', $quiz->id));
+        }
+
         $competition = $this->calculateCompetition($quiz);
 
         $questions      = $quiz->questions()
