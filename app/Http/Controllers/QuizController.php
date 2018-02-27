@@ -179,7 +179,7 @@ class QuizController extends Controller
             return (object)[
                 'name'     => $team->name,
                 'current'  => $current ,
-                'progress' => round($current / $total * 100)
+                'progress' => ($current == 0) ? 0 : round($current / $total * 100)
             ];
         });
         $competition->scores = [];
