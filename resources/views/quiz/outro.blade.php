@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
-    {{ $quiz->outro }}
-
+    <div>
+    {!! $quiz->outro !!}
+    </div>
 @endsection
