@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', 'QuizController@pickQuiz')->name('home');
 Route::get('entry/quiz', 'QuizController@pickQuiz')->name('entry.quiz');
 Route::get('entry/quiz/{quiz}', 'QuizController@pickTeam')->name('entry.team');
 Route::get('entry/team/{team}', 'QuizController@pickPlayer')->name('entry.player');

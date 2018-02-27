@@ -16,6 +16,9 @@ class QuizController extends Controller
     //
 
 
+    /**
+     * @return $this
+     */
     public function pickQuiz()
     {
         $quizzes = Quiz::all();
@@ -25,6 +28,10 @@ class QuizController extends Controller
         ]);
     }
 
+    /**
+     * @param Quiz $quiz
+     * @return $this
+     */
     public function pickTeam(Quiz $quiz)
     {
         $teams = $quiz->teams()->get();
