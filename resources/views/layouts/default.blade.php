@@ -67,15 +67,6 @@
     </div>
 </footer>
 
-<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-<script type="application/javascript">
-    "use strict";
-    var quizConf = {
-        channelId: 'quiz-{!!  $quiz->id  !!}',
-        teamId: '{{ $team->id }}',
-        competition: @json($competition)
-    }
-</script>
 @yield('script-vars')
 <script src="/js/app.js"></script>
 @yield('scripts')
