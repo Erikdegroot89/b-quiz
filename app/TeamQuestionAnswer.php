@@ -36,7 +36,7 @@ class TeamQuestionAnswer extends Model
         $team = $this->team()->with('quiz')->get()->first();
 
         $quiz_id = $team->quiz->id;
-        $question = $this->question()->get();
+        $question = $this->question()->get()->first();
         $data['message'] = 'Team '.$team->name.' heeft vraag '. ($question->sort_order + 1). ' beantwoord!';
         $data['answer'] = $this->toArray();
         $data['team'] = $team;
