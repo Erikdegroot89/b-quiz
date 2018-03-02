@@ -37,17 +37,17 @@
                 <div class="post-heading">
                     @section('top')
                         <h1>{{ $quiz->name }}</h1>
-                        @if($progress)
-                            <ul class="progressContainer">
-                                @foreach($progress as $teamProgress)
-                                    <li class="teamProgress" data-team-id="{{ $teamProgress->team->id }}">
-                                        <span>{{ $teamProgress->team->name }}: </span>
-                                        <span class="progressText">{{$teamProgress->progress->answered}} / {{$teamProgress->progress->total}}</span>
-                                        <progress value="{{$teamProgress->progress->answered}}" max="{{$teamProgress->progress->total}}"></progress>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
+                        {{--@if($progress)--}}
+                            {{--<ul class="progressContainer">--}}
+                                {{--@foreach($progress as $teamProgress)--}}
+                                    {{--<li class="teamProgress" data-team-id="{{ $teamProgress->team->id }}">--}}
+                                        {{--<span>{{ $teamProgress->team->name }}: </span>--}}
+                                        {{--<span class="progressText">{{$teamProgress->progress->answered}} / {{$teamProgress->progress->total}}</span>--}}
+                                        {{--<progress value="{{$teamProgress->progress->answered}}" max="{{$teamProgress->progress->total}}"></progress>--}}
+                                    {{--</li>--}}
+                                {{--@endforeach--}}
+                            {{--</ul>--}}
+                        {{--@endif--}}
                     @show
                 </div>
             </div>
