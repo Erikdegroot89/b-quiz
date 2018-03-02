@@ -10454,6 +10454,39 @@ a.text-dark:focus {
   font-size: 84px;
 }
 
+.progressContainer {
+  list-style: none;
+  padding: 0;
+}
+
+.progressContainer .teamProgress {
+  padding: 5px;
+  margin-bottom: 10px;
+  font-size: 18pt;
+}
+
+.progressContainer .teamProgress span {
+  display: inline-block;
+  width: 25%;
+}
+
+.progressContainer .teamProgress progress {
+  border: solid 2px grey;
+  width: 70%;
+}
+
+.hintBox {
+  margin-bottom: 25px;
+  background: #eee;
+  padding: 10px;
+}
+
+.nextButton {
+  display: block;
+  margin: 25px;
+  font-size: 20pt;
+}
+
 .m-b-md {
   margin-bottom: 30px;
 }

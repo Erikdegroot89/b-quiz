@@ -13,14 +13,15 @@
     @foreach($quizzes as $quiz)
         <div class="quiz">
             <a href="{{ route('entry.team', $quiz->id) }}"><h2>{{$quiz->name}}</h2></a>
-            <section role="content">
-            {{$quiz->body}}
+            <section class="text">
+            {!! $quiz->body !!}
             </section>
             @if($quiz->image_url)
-            <section role="image">
+            <section class="image">
                 <img src="{{$quiz->image_url}}"/>
             </section>
             @endif
+            <a class="nextButton" href="{{ route('entry.team', $quiz->id) }}">Naar quiz &rarr;</a>
         </div>
     @endforeach
 @endsection

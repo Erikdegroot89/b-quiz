@@ -37,6 +37,9 @@ class QuizController extends Controller
         $teams = $quiz->teams()->get();
         session('quiz', $quiz);
 
+        $progress = $quiz->getProgress();
+//        dd($progress);
+
         return view('entry.team')->with([
             'quiz'  => $quiz,
             'teams' => $teams
@@ -82,27 +85,30 @@ class QuizController extends Controller
      */
     public function start(Quiz $quiz)
     {
-        $player      = session('player');
-        $team        = session('team');
+        $player = session('player');
+        $team   = session('team');
 
-        if(!$player)
-        {
+        if (!$player) {
             return redirect(route('entry.team', $quiz->id));
         }
 
-        $competition = $this->calculateCompetition($quiz);
-
+        $activeQuestion = $team->getActiveQuestion();
         $questions      = $quiz->questions()
                                ->where('team_id', '=', $team->first()->id)
                                ->get();
-        $activeQuestion = $team->getActiveQuestion($quiz->id);
+
+
+        $progress = $quiz->getProgress();
+
+
         return view('quiz.intro')->with([
             'player'         => $player,
             'team'           => $team,
             'quiz'           => $quiz,
             'questions'      => $questions,
-            'competition'    => $competition,
-            'activeQuestion' => $activeQuestion ?: $questions->first()
+            'teamProgress'   => $team->getProgress(),
+            'activeQuestion' => $activeQuestion ?: $questions->first(),
+            'progress'       => $progress
         ]);
     }
 
@@ -114,7 +120,6 @@ class QuizController extends Controller
     {
         $player      = session('player');
         $team        = session('team');
-        $competition = $this->calculateCompetition($quiz);
 
         $questions = $quiz->questions()
                           ->where('team_id', '=', $team->first()->id)
@@ -125,7 +130,7 @@ class QuizController extends Controller
             'team'        => $team,
             'quiz'        => $quiz,
             'questions'   => $questions,
-            'competition' => $competition
+            'progress'    => $quiz->getProgress()
         ]);
     }
 
@@ -138,18 +143,17 @@ class QuizController extends Controller
     public function question(Request $request, Question $question)
     {
         $next        = null;
-        $answer      = $request->input('answer');
+        $answer      = strtolower($request->input('answer'));
         $hint        = $request->input('hint');
         $player      = session('player');
         $team        = session('team');
         $quiz        = $question->quiz()->get()->first();
         $validAnswer = $this->validateAnswerInput($question, $answer);
 
-        if(!$player)
-        {
-           return redirect(route('entry.team', $quiz->id));
+        if (!$player) {
+            return redirect(route('entry.team', $quiz->id));
         }
-        $competition = $this->calculateCompetition($quiz);
+
         if ($answer) {
             $next = $question->getNext();
 
@@ -175,30 +179,10 @@ class QuizController extends Controller
             'question'    => $question,
             'validAnswer' => $validAnswer,
             'next'        => $next,
-            'competition' => $competition
+            'progress'    => $quiz->getProgress()
         ]);
     }
 
-    private function calculateCompetition(Quiz $quiz)
-    {
-        $total       = $quiz->questions()->count();
-        $teams       = $quiz->teams()->get();
-
-        $competition = (object)[];
-
-        $competition->teams = $teams->map(function ($team) use ($quiz, $total) {
-            $active_q = $team->getActiveQuestion($quiz->id);
-            $current = ($active_q) ? $active_q->sort_order : 0;
-            return (object)[
-                'name'     => $team->name,
-                'current'  => $current ,
-                'progress' => ($current == 0) ? 0 : round($current / $total * 100)
-            ];
-        });
-        $competition->scores = [];
-        $competition->total = $total;
-        return $competition;
-    }
 
     private function validateAnswerInput(Question $question, $answer)
     {

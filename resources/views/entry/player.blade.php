@@ -9,8 +9,9 @@
 
 @section('content')
 
-    <h2>Team {{ $team->name }}</h2>
+    <h2>Team "{{ $team->name }}"</h2>
     <div class="players">
+        <h3>Kies een van de spelers...</h3>
         <ul>
     @foreach($players as $player)
         <li>
@@ -20,7 +21,7 @@
         </li>
     @endforeach
 
-            <li>
+            <li>Of, maak een nieuwe speler aan:
                 <form method="post" action="{{ route('player.create'), $team->id }}">
                     {{ csrf_field() }}
                     <input type="hidden" name="team_id" value="{{ $team->id }}"/>

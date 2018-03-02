@@ -18,5 +18,18 @@ class Quiz extends Model
         return $this->hasMany('App\Team');
     }
 
+    public function getProgress()
+    {
+        $teams = $this->teams();
+
+        $progress = $teams->get()->map(function ($team) {
+            return (object)[
+                'team'     => $team,
+                'progress' => $team->getProgress()
+            ];
+        });
+
+        return $progress;
+    }
 
 }

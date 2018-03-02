@@ -13,6 +13,11 @@ class Question extends Model
         return $this->belongsTo('App\Quiz');
     }
 
+    public function team()
+    {
+        return $this->belongsTo('App\Team');
+    }
+
     /**
      * @param $quiz_id
      * @param $team_id

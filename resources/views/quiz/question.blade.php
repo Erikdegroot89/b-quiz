@@ -5,7 +5,7 @@
 
 @section('top')
     @parent
-    <h1>{{ $quiz->name }} vraag {{ $question->sort_order + 1 }}</h1>
+    <h2>vraag {{ $question->sort_order + 1 }}</h2>
     <div>
         <h3>{{ $question->body }}</h3>
     </div>
@@ -14,15 +14,22 @@
 @section('content')
 
     <div>
-        @if($hinted)
-            <div>
-                {{ $question->hint }}
+        @if($question->hint )
+            <div class="hintBox">
+            @if($hinted)
+                <div>
+                    <h4>Hint:</h4>
+                </div>
+                <div>
+                    {{ $question->hint }}
+                </div>
+            @else
+            <form method="get" action="{{ route('quiz.question', $question->id) }}">
+                <input type="hidden" name="hint" value="1">
+                <input type="submit" value="Geef me een hint!"/>
+            </form>
+            @endif
             </div>
-        @else
-        <form method="get" action="{{ route('quiz.question', $question->id) }}">
-            <input type="hidden" name="hint" value="1">
-            <input type="submit" value="Hint"/>
-        </form>
         @endif
         <form method="post" action="{{ route('quiz.postAnswer', $question->id) }}">
             {{ csrf_field() }}
@@ -42,9 +49,9 @@
     @endif
     @if($validAnswer)
         @if($next)
-            <a href="{{ route('quiz.question', $next->id) }}">next &rarr;</a>
+            <a class="nextButton" href="{{ route('quiz.question', $next->id) }}">next &rarr;</a>
         @else
-            <a href="{{ route('quiz.end', $quiz->id) }}">next &rarr;</a>
+            <a class="nextButton" href="{{ route('quiz.end', $quiz->id) }}">next &rarr;</a>
         @endif
     @endif
 @endsection

@@ -10,6 +10,6 @@
 
 @section('content')
     <div class="title m-b-md">Je speelt voor {{$team->name}}</div>
-    <a href="{{ route('quiz.start', $team->quiz_id) }}">Start &rarr;</a>
+    <a class="nextButton" href="{{ route('quiz.start', $team->quiz_id) }}">Start &rarr;</a>
 
 @endsection
