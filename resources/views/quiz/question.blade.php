@@ -24,17 +24,17 @@
                     {{ $question->hint }}
                 </div>
             @else
-            <form method="get" action="{{ route('quiz.question', $question->id) }}">
+            <form method="get" action="{{ route('quiz.question', $question) }}">
                 <input type="hidden" name="hint" value="1">
                 <input type="submit" value="Geef me een hint!"/>
             </form>
             @endif
             </div>
         @endif
-        <form method="post" action="{{ route('quiz.postAnswer', $question->id) }}">
+        <form method="post" action="{{ route('quiz.postAnswer', $question) }}">
             {{ csrf_field() }}
             <input name="answer"  required/>
-            <input type="submit" value="Antwoord insturen"/>
+            <input class="btn btn-primary" type="submit" value="Antwoord insturen"/>
         </form>
 
     </div>
@@ -49,9 +49,9 @@
     @endif
     @if($validAnswer)
         @if($next)
-            <a class="nextButton" href="{{ route('quiz.question', $next->id) }}">next &rarr;</a>
+            <a class="btn btn-primary btn-raised" href="{{ route('quiz.question', $next) }}">volg &rarr;</a>
         @else
-            <a class="nextButton" href="{{ route('quiz.end', $quiz->id) }}">next &rarr;</a>
+            <a class="btn btn-primary btn-raised" href="{{ route('quiz.end', $quiz) }}">next &rarr;</a>
         @endif
     @endif
 @endsection

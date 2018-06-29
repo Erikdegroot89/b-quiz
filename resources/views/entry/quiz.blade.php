@@ -1,7 +1,6 @@
-
 @extends('layouts.default')
 
-@section('title', 'Page Title')
+@section('title', !empty($quiz) ? $quiz->name : '')
 
 @section('top')
     @parent
@@ -10,18 +9,21 @@
 
 @section('content')
     <div class="title m-b-md">Quizzes</div>
-    @foreach($quizzes as $quiz)
-        <div class="quiz">
-            <a href="{{ route('entry.team', $quiz->id) }}"><h2>{{$quiz->name}}</h2></a>
-            <section class="text">
-            {!! $quiz->body !!}
-            </section>
-            @if($quiz->image_url)
-            <section class="image">
-                <img src="{{$quiz->image_url}}"/>
-            </section>
-            @endif
-            <a class="nextButton" href="{{ route('entry.team', $quiz->id) }}">Naar quiz &rarr;</a>
-        </div>
-    @endforeach
+    <div class="list-group">
+        <a href="{{ route('quiz.create') }}" class="btn"><i class="material-icons">add</i><span>Quiz aanmaken</span></a>
+        @foreach($quizzes as $quiz )
+            <div class="quiz list-group-item" @if($quiz->image_url) data-bg-image={{$quiz->image_url}} @endif>
+                <div class="bmd-list-group-col">
+                    <p class="list-group-item-heading" href="{{ route('entry.team', $quiz) }}">{{$quiz->name}}</p>
+                    <p class="list-group-item-text">
+                        {!! $quiz->description !!}
+                    </p>
+                </div>
+                <a title="Naar quiz" class="btn btn-secondary pull-xs-right" href="{{ route('entry.team', $quiz) }}">
+                    <i class="material-icons">arrow_forward</i>
+                </a>
+
+            </div>
+        @endforeach
+    </div>
 @endsection

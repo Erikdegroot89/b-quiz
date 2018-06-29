@@ -1,7 +1,7 @@
 
 @extends('layouts.default')
 
-@section('title', 'Page Title')
+@section('title', $quiz->name)
 
 @section('top')
     @parent
@@ -10,6 +10,6 @@
 
 @section('content')
     <div class="title m-b-md">Je speelt voor {{$team->name}}</div>
-    <a class="nextButton" href="{{ route('quiz.start', $team->quiz_id) }}">Start &rarr;</a>
+    <a class="nextButton" href="{{ route('quiz.start', $quiz) }}">Start &rarr;</a>
 
 @endsection

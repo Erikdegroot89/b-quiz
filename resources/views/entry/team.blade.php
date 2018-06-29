@@ -1,7 +1,6 @@
-
 @extends('layouts.default')
 
-@section('title', 'Page Title')
+@section('title', $quiz->name)
 
 @section('top')
     @parent
@@ -10,17 +9,20 @@
 
 @section('content')
     <div class="title m-b-md">Teams</div>
-    @foreach($teams as $team)
-        <div class="team">
-        <a href="{{ route('entry.player', $team->id) }}"><h2>{{$team->name}}</h2></a>
-        <section role="content">
-            {{$team->body}}
-        </section>
-        @if($team->image_url)
-            <section role="image">
-                <img src="{{$team->image_url}}"/>
-            </section>
-        @endif
-        </div>
-    @endforeach
+    <ol class="list-group">
+        @foreach($teams as $team)
+            <li class="list-group-item team" @if($team->image_url) data-bg-image="{{$team->image_url}} @endif">
+                <div class="bmd-list-group-col">
+                    <p class="list-group-item-heading">{{$team->name}}</p>
+                    <p class="list-group-item-text">
+                        {{$team->description}}
+                    </p>
+                </div>
+                <a href="{{ route('entry.player', $team) }}" title="Kies dit Team" class="btn pull-xs-right">
+                    <i class="material-icons">arrow_forward</i>
+                </a>
+
+            </li>
+        @endforeach
+    </ol>
 @endsection
