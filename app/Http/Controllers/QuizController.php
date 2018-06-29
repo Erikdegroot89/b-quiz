@@ -53,7 +53,7 @@ class QuizController extends Controller
     public function pickPlayer(Team $team)
     {
         return view('entry.player')->with([
-            'quiz'    => $team->quiz()->get(),
+            'quiz'    => $team->quiz()->get()->first(),
             'team'    => $team,
             'players' => $team->players()->get()
         ]);
@@ -67,7 +67,7 @@ class QuizController extends Controller
     public function ready(Request $request, Player $player)
     {
         $team = $player->team()->get()->first();
-        $quiz = $team->quiz();
+        $quiz = $team->quiz()->get()->first();
 
         $request->session()->put('player', $player);
         $request->session()->put('team', $team);
@@ -88,13 +88,13 @@ class QuizController extends Controller
         $player = session('player');
         $team   = session('team');
 
-        if (!$player) {
-            return redirect(route('entry.team', $quiz->id));
+        if (!$player || !$team) {
+            return redirect(route('entry.team', $team));
         }
 
         $activeQuestion = $team->getActiveQuestion();
         $questions      = $quiz->questions()
-                               ->where('team_id', '=', $team->first()->id)
+                               ->where('team_id', '=', $team->id)
                                ->get();
 
 
