@@ -6,7 +6,6 @@
  */
 
 require('./bootstrap');
-require('./clean-blog.min');
 
 window.Vue = require('vue');
 
